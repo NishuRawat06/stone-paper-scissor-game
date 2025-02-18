@@ -1,0 +1,65 @@
+*{
+    text-align: center;
+    background-color: #1a1a2e;
+    color: white;
+    font-family: cursive;
+}
+
+.button{
+    display: flex;
+    justify-content: space-around;
+    
+}
+.stonebtn{
+    width: 120px;
+    height: 50px;
+    border:2px solid #4ecca3;
+    color: #4ecca3;
+}
+.stonebtn:hover{
+    background-color: rgba(78, 204, 163, 0.1);
+    box-shadow: 0 8px 12px rgba(78, 204, 163, 0.2);
+    transform: scale(1.05);
+    border-color: #3dbd90;
+}
+.paperbtn{
+    width: 120px;
+    height: 50px;
+    border:2px solid #4ecca3;
+    color: #4ecca3;
+}
+.paperbtn:hover{
+    background-color: rgba(78, 204, 163, 0.1);
+    box-shadow: 0 8px 12px rgba(78, 204, 163, 0.2);
+    transform: scale(1.05);
+    border-color: #3dbd90;
+}
+.scissorbtn{
+    width: 120px;
+    height: 50px;
+    border:2px solid #4ecca3;
+    color: #4ecca3;
+}
+.scissorbtn:hover{
+    background-color: rgba(78, 204, 163, 0.1);
+    box-shadow: 0 8px 12px rgba(78, 204, 163, 0.2);
+    transform: scale(1.05);
+    border-color: #3dbd90;
+}
+.imgcontainer{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 350px;
+}
+.left-side, .right-side{
+    width: 50%;
+}
+.action-image{
+   display: none;
+}
+.score{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
