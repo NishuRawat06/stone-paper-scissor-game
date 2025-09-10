@@ -7,18 +7,25 @@
     <link rel="stylesheet" href="game2.css">
 </head>
 <body>
+
     <div class="main">
         <h1>choose an option</h1>
+        <div class="round">
+    Round: <span id="round-num">1</span>/5
+</div>
+<div class="result-message">
+    <span id="round-result"></span>
+</div>
         <div class="imgcontainer">
             <div class="left-side">
-                <img class="action-image botpaper" id="bot-paper" src="C:\Users\suraj\Downloads\nishu_js\stone-paper-scissor\gameImages\paperComputer.png">
-                <img class="action-image botscissor" id="bot-scissor" src="C:\Users\suraj\Downloads\nishu_js\stone-paper-scissor\gameImages\scissorsComputer.png">
-                <img class="action-image botstone" id="bot-stone" src="C:\Users\suraj\Downloads\nishu_js\stone-paper-scissor\gameImages\stoneComputer.png">
+                <img class="action-image botpaper" id="bot-paper" src="public/paperComputer.png">
+                <img class="action-image botscissor" id="bot-scissor" src="public/scissorsComputer.png">
+                <img class="action-image botstone" id="bot-stone" src="public/stoneComputer.png">
             </div>
             <div class="right-side">
-                <img class="action-image" id="paper-img"src="C:\Users\suraj\Downloads\nishu_js\stone-paper-scissor\gameImages\paperPlayer.png">
-                <img class="action-image" id="scissor-img" src="C:\Users\suraj\Downloads\nishu_js\stone-paper-scissor\gameImages\scissorsPlayer.png">
-                <img class="action-image" id="stone-img" src="C:\Users\suraj\Downloads\nishu_js\stone-paper-scissor\gameImages\stonePlayer.png">
+                <img class="action-image" id="paper-img" src="public/paperplayer.png">
+                <img class="action-image" id="scissor-img" src="public/scissorsPlayer.png">
+                <img class="action-image" id="stone-img" src="public/stonePlayer.png">
             </div>    
         </div>    
         <div class="score">
@@ -30,6 +37,7 @@
            <button class="paperbtn">paper</button>
            <button class="scissorbtn">scissor</button>
        </div>
+       <button id="restart-btn" style="display:none; margin-top: 20px;">Restart Game</button>
     </div>
     <script src="game2.js"></script>
 </body>

@@ -1,114 +1,122 @@
-let btn=document.querySelectorAll(".button")
+// DOM elements
+const stoneBtn = document.querySelector('.stonebtn');
+const paperBtn = document.querySelector('.paperbtn');
+const scissorBtn = document.querySelector('.scissorbtn');
 
-let stoneBtn = document.querySelector('.stonebtn');
-let paperBtn = document.querySelector('.paperbtn');
-let scissorBtn= document.querySelector('.scissorbtn');
+const stoneImage = document.getElementById('stone-img');
+const paperImage = document.getElementById('paper-img');
+const scissorImage = document.getElementById('scissor-img');
 
-let stoneImage = document.getElementById('stone-img');
-let paperImage = document.getElementById('paper-img');
-let scissorImage=document.getElementById('scissor-img')
+const botStone = document.getElementById('bot-stone');
+const botPaper = document.getElementById('bot-paper');
+const botScissor = document.getElementById('bot-scissor');
 
-let botstone=document.querySelector('#bot-stone');
-let botScissor = document.querySelector('#bot-scissor');
-let botpaper=document.querySelector('#bot-paper')
+const comscoreElem = document.getElementById('comscore');
+const pscoreElem = document.getElementById('pscore');
+const roundNumElem = document.getElementById('round-num');
+const roundResultElem = document.getElementById('round-result');
+const restartBtn = document.getElementById('restart-btn');
 
-let comscore=document.getElementById('comscore');
-let pscore=document.getElementById('pscore')
-
-
-let playerscore=0;
-let botscore=0;
-let botSelection=0;
-let humanArr = [stoneBtn, paperBtn, scissorBtn];
+const humanArr = [stoneBtn, paperBtn, scissorBtn];
 const humanImages = [stoneImage, paperImage, scissorImage];
-const botImages=[botstone,botScissor,botpaper];
+const botImages = [botStone, botPaper, botScissor];
 
-function winnercheck(botChoice, currChoice){
-    if(botChoice === "botstone" && currChoice === "paperbtn"){
-        console.log("you won")
-        playerscore++
-      console.log(`player score:${playerscore}`);
-      pscore.innerText=playerscore;
-    }
-    else if(botChoice=="botstone" && currChoice == "scissorbtn"){
-        console.log("you lose")
-        botscore++
-        console.log(`player score:${botscore}`);
-        comscore.innerText=botscore;
-    }
-    else if(botChoice=="botpaper" && currChoice=="stonebtn"){
-        console.log("you lose")
-        botscore++
-        console.log(`player score:${botscore}`);
-        comscore.innerText=botscore;
-    }
-    else if(botChoice=="botpaper" && currChoice=="scissorbtn"){
-        console.log("you won")
-        playerscore++
-        console.log(`player score:${playerscore}`);
-        pscore.innerText=playerscore;
-    }
-    else if(botChoice=="botscissor" && currChoice=="paperbtn"){
-        console.log("you lose")
-        botscore++
-        console.log(`player score:${botscore}`);
-        comscore.innerText=botscore;
-    }
-    else if(botChoice=="botscissor" && currChoice=="stonebtn"){
-        console.log("you won")
-        playerscore++
-        console.log(`player score:${playerscore}`)
-        pscore.innerText=playerscore;
-    }
-    else{
-        console.log("draw")
-    }
- }
+let playerScore = 0;
+let botScore = 0;
+let round = 0;
+const maxRounds = 5;
 
 
 
-
-
-
-
-function randomimg (){
-    let ind = Math.floor(Math.random() * botImages.length);
-    //console.log(ind);
-    const randomElement = botImages[ind]; 
-    return randomElement;
+function resetHands() {
+    humanImages.forEach(img => img.style.display = 'none');
+    botImages.forEach(img => img.style.display = 'none');
 }
 
-humanArr.forEach((ele,idx) => {
-    ele.addEventListener('click', () => {
-        // console.log(ele.classList[0])
-        //console.log(stoneImage, humanImages, humanArr);
-        humanImages.forEach((img) =>{
-            img.classList.add('action-image');
-        }) 
-        botImages.forEach((img) =>{
-            img.classList.add('action-image');
-        }) 
-        botSelection = randomimg();
-        botSelection.classList.remove('action-image');
-        currChoice = ele.classList[0];
-        botChoice = botSelection.classList[0];
-        humanImages[idx].classList.remove('action-image');
-        winnercheck(botChoice,currChoice);
-    })
-})
+// Pick a random bot hand
+function randomBotHand() {
+    const ind = Math.floor(Math.random() * botImages.length);
+    return botImages[ind];
+}
 
-// stoneBtn.addEventListener('click', () => {
-//     let botSelection = randomimg();
-//     botSelection.classList.remove('action-image');
-//     stoneImage.classList.remove('action-image');
-// })
-// paperBtn.addEventListener('click', () => {
-//     let botSelection = randomimg();
-//     botSelection.classList.remove('action-image');
-//     paperImage.classList.remove('action-image');
-// })
-// scissorBtn.addEventListener('click', () => {
-//     let botSelection = randomimg();
-//     botSelection.classList.remove('action-image');
-//     scissorImage.classList.remove('action-image');
-// })
+// Determine winner
+function winnerCheck(botImg, playerImg) {
+    const playerId = playerImg.id;
+    const botId = botImg.id;
+
+    if (
+        (playerId === 'stone-img' && botId === 'bot-scissor') ||
+        (playerId === 'paper-img' && botId === 'bot-stone') ||
+        (playerId === 'scissor-img' && botId === 'bot-paper')
+    ) {
+        playerScore++;
+        pscoreElem.textContent = playerScore;
+        roundResultElem.textContent = "Player wins this round!";
+    } else if (
+        (playerId === 'stone-img' && botId === 'bot-paper') ||
+        (playerId === 'paper-img' && botId === 'bot-scissor') ||
+        (playerId === 'scissor-img' && botId === 'bot-stone')
+    ) {
+        botScore++;
+        comscoreElem.textContent = botScore;
+        roundResultElem.textContent = "Computer wins this round!";
+    } else {
+        roundResultElem.textContent = "It's a Draw!";
+    }
+}
+
+// Play one round
+function playRound(idx) {
+    if(round > maxRounds) return; // Stop after max rounds
+
+    resetHands();
+
+    const playerImg = humanImages[idx];
+    const botImg = randomBotHand();
+
+    playerImg.style.display = 'block';
+    botImg.style.display = 'block';
+
+    winnerCheck(botImg, playerImg);
+
+    round++;
+    roundNumElem.textContent = round <= maxRounds ? round : maxRounds;
+
+    // Check if game is over
+    if(round > maxRounds || playerScore === 3 || botScore === 3) { // first to 3 wins
+        let finalResult = '';
+        if(playerScore > botScore) finalResult = "🎉 Player wins the game!";
+        else if(botScore > playerScore) finalResult = "💻 Computer wins the game!";
+        else finalResult = "😎 It's a Draw!";
+
+        // Show restart button
+        restartBtn.style.display = 'block';
+        roundResultElem.textContent = finalResult;
+
+        // Disable buttons
+        humanArr.forEach(btn => btn.disabled = true);
+    }
+}
+
+// Restart game
+function restartGame() {
+    playerScore = 0;
+    botScore = 0;
+    round = 1;
+    pscoreElem.textContent = playerScore;
+    comscoreElem.textContent = botScore;
+    roundNumElem.textContent = round;
+    roundResultElem.textContent = '';
+    restartBtn.style.display = 'none';
+    resetHands();
+    humanArr.forEach(btn => btn.disabled = false);
+}
+
+// Attach click events
+humanArr.forEach((btn, idx) => {
+    btn.addEventListener('click', () => playRound(idx));
+});
+restartBtn.addEventListener('click', restartGame);
+
+// Initialize hands
+resetHands();
